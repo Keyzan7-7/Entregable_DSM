@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<DC_UML:Diagrama
+    xmi:version="2.0"
+    xmlns:xmi="http://www.omg.org/XMI"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:DC_UML="http://DC_UML"
+    xsi:schemaLocation="http://DC_UML /entrega2_12/modelos/DC_Uml.ecore"
+    nombre="Prueba">
+  <clase nombre="Clase1">
+    <atributo
+        nombre="AT_1"/>
+    <atributo
+        nombre="AT_2"
+        tipo="cadena"
+        min="1"
+        max="50"/>
+  </clase>
+  <clase nombre="Clase2">
+    <atributo
+        nombre="AT_1"
+        max="1"/>
+  </clase>
+</DC_UML:Diagrama>

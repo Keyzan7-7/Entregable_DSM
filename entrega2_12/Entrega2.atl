@@ -1,0 +1,31 @@
+-- @nsURI Uml=http://DC_UML
+-- @nsURI ER=ER_2024
+
+module Entrega2;
+create OUT : ER from IN : Uml;
+rule diagrama2esquema {
+	from
+		miDiag : Uml!Diagrama
+	to 
+		es : ER!Esquema (
+			nombre <- miDiag.nombre
+		)
+}
+rule Clase2Tabla {
+	from
+		clase : Uml!Clase
+	to 
+		tabla : ER!Tabla (
+			nombre <- clase.nombre,
+			esquema <- clase.diagrama,
+			columnas <- column
+		),
+		column : ER!Columna (
+			nombre <- 'id: ' + tabla.nombre,
+			tabla <- tabla,
+			esPrimaria <- true,
+			esUnico <- true,
+			rango <- 1,
+			tipo <- #integer
+)
+}

@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<ER_2024:Esquema xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:ER_2024="ER_2024" nombre="Prueba">
+  <tablas nombre="Clase1">
+    <columnas nombre="id: Clase1" esPrimaria="true" esUnico="true" rango="1"/>
+  </tablas>
+  <tablas nombre="Clase2">
+    <columnas nombre="id: Clase2" esPrimaria="true" esUnico="true" rango="1"/>
+  </tablas>
+</ER_2024:Esquema>
