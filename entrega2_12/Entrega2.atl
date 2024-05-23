@@ -33,14 +33,17 @@ rule Atr2Col {
 	from
 		atributo : Uml!Atributo
 	to 
-		columna : ER!Columna (
+		column : ER!Columna (
 			nombre <- atributo.nombre,
 			esPrimaria <- false,
-			esUnico <- true,
+			esUnico <- false,
 			rango <- atributo.max,
-			tipo <- atributo.convierteTipo()
+			tipo <- atributo.convierteTipo(),
+			tabla <- atributo.clase,
+			esNulo <- atributo.oclIsUndefined()
 )
 }
+
 helper context Uml!Atributo def : convierteTipo() : Relational!TipoDatosER =
   if self.tipo = #entero then #integer
   else
@@ -51,3 +54,79 @@ helper context Uml!Atributo def : convierteTipo() : Relational!TipoDatosER =
       endif
     endif
   endif;
+
+rule aso2clave {
+	from
+		asociacion : Uml!Asociacion (asociacion.finAsociacion->first().max = 1)
+	to 
+		claveAjena : ER!ClaveAjena (
+			nombre <- 'FK : ' + asociacion.nombre,
+			esquema <- asociacion.diagrama,
+			referenciada <- thisModule.resolveTemp(asociacion.finAsociacion.first().clase, 'id'),
+			columna <- FK_columna
+		),
+		FK_columna : ER!Columna (
+			nombre <- 'id_FK :' + asociacion.finAsociacion->first().rol,
+			esPrimaria <- false,
+			esUnico <- if asociacion.finAsociacion->last().max = 1 then false else true endif,
+			tabla <- asociacion.finAsociacion->last().clase,
+			tipo <- #integer,
+			rango <- 1
+		)
+}
+
+rule ClaseHija2Tabla {
+  from
+    c : Uml!Clase (not c.generaliza.oclIsUndefined())
+  to
+    t : ER!Tabla (
+      Nombre <- c.nombre,
+      Padre <- c.diagrama,
+      columnas <- col
+    ),
+    col : ER!Columna (
+      Nombre <- 'ID_' + c.nombre,
+      EsPrimaria <- true,
+      Tipo <- #integer,
+      rango <- 1,
+      EsUnico <- true,
+      enClaveAjena <- fk
+    ),
+    fk : ER!ClaveAjena (
+      Nombre <- 'FK_de_' + c.nombre + '_a_' + c.generaliza.nombre,
+      columna <- fk_col,
+      columnaReferenciada <- thisModule.resolveTemp(c.generaliza, 'col'),
+      esquema <- t.Padre
+    ),
+    fk_col : ER!Columna (
+      Nombre <- 'id_fk_' + c.generaliza.nombre,
+      tabla <- t
+    )
+}
+
+rule Asociacion2FK {
+    from
+        relacion : Uml!Relacion (not relacion.claseasociacion.oclIsUndefined())
+    to
+        fk_1 : Relational!ClaveAjena (
+            Nombre <- 'FK_de_' + relacion.claseasociacion.nombre + 'a' + relacion.finrelacion.first().rol,
+            columnaReferenciada <- thisModule.resolveTemp(relacion.finrelacion.first().clase, 'col'),
+            columna <- fk_columna_1
+        ),
+        fk_2 : Relational!ClaveAjena (
+            Nombre <- 'FK_de_' + relacion.claseasociacion.nombre + 'a' + relacion.finrelacion.last().rol,
+            columnaReferenciada <- thisModule.resolveTemp(relacion.finrelacion.last().clase, 'col'),
+            columna <- fk_columna_2,
+            esquema <- fk_1.esquema
+        ),
+        fk_columna_1 : Relational!Columna (
+            Nombre <- 'ID_FK_' + relacion.finrelacion.first().rol,
+            tabla <- relacion.claseasociacion
+        ),
+        fk_columna_2 : Relational!Columna (
+            Nombre <- 'ID_FK_' + relacion.finrelacion.last().rol,
+            tabla <- relacion.claseasociacion
+        )
+}
+
+

@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<DC_UML:Diagrama
+    xmi:version="2.0"
+    xmlns:xmi="http://www.omg.org/XMI"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:DC_UML="http://DC_UML"
+    xsi:schemaLocation="http://DC_UML /entrega2_12/modelos/DC_Uml.ecore"
+    nombre="Prueba">
+  <clase nombre="Math">
+    <atributo
+        nombre="Numero"/>
+    <atributo
+        nombre="frase"
+        tipo="cadena"
+        min="1"
+        max="50"/>
+    <atributo
+        nombre="decimales"/>
+  </clase>
+</DC_UML:Diagrama>
