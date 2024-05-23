@@ -29,3 +29,25 @@ rule Clase2Tabla {
 			tipo <- #integer
 )
 }
+rule Atr2Col {
+	from
+		atributo : Uml!Atributo
+	to 
+		columna : ER!Columna (
+			nombre <- atributo.nombre,
+			esPrimaria <- false,
+			esUnico <- true,
+			rango <- atributo.max,
+			tipo <- atributo.convierteTipo()
+)
+}
+helper context Uml!Atributo def : convierteTipo() : Relational!TipoDatosER =
+  if self.tipo = #entero then #integer
+  else
+    if self.tipo = #cadena then #string
+    else
+      if self.tipo = #real then #double
+      else #fecha
+      endif
+    endif
+  endif;

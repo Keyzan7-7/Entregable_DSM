@@ -6,18 +6,15 @@
     xmlns:DC_UML="http://DC_UML"
     xsi:schemaLocation="http://DC_UML /entrega2_12/modelos/DC_Uml.ecore"
     nombre="Prueba">
-  <clase nombre="Clase1">
+  <clase nombre="Math">
     <atributo
-        nombre="AT_1"/>
+        nombre="Numero"/>
     <atributo
-        nombre="AT_2"
+        nombre="frase"
         tipo="cadena"
         min="1"
         max="50"/>
-  </clase>
-  <clase nombre="Clase2">
     <atributo
-        nombre="AT_1"
-        max="1"/>
+        nombre="decimales"/>
   </clase>
 </DC_UML:Diagrama>
