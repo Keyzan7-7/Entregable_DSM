@@ -23,17 +23,14 @@
   </clase>
   <clase xsi:type="DC_UML:ClaseAsociacion"
       nombre=""
-      finrelacion="//@relacion.0/@finAsociacion.0 //@relacion.0/@finAsociacion.1"
       asociacion="//@relacion.0"/>
   <relacion
       nombre="Relacion"
       claseasociacion="//@clase.2">
     <finAsociacion
-        clase="//@clase.2"
         rol="Math"
         max="1"/>
     <finAsociacion
-        clase="//@clase.2"
         rol="Lengua"
         max="-1"/>
   </relacion>

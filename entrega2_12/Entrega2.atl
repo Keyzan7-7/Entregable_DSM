@@ -106,27 +106,27 @@ rule ClaseHija2Tabla {
 
 rule Asociacion2FK {
     from
-        relacion : Uml!Relacion (not relacion.claseasociacion.oclIsUndefined())
+        asociacion : Uml!Asociacion (not asociacion.claseasociacion.oclIsUndefined())
     to
         fk_1 : ER!ClaveAjena (
-            Nombre <- 'FK_de_' + relacion.claseasociacion.nombre + 'a' + relacion.finrelacion.first().rol,
-            columnaReferenciada <- thisModule.resolveTemp(relacion.finrelacion.first().clase, 'col'),
+            nombre <- 'FK_de_' + asociacion.claseasociacion.nombre + 'a' + asociacion.finAsociacion.first().rol,
+            columnaReferenciada <- thisModule.resolveTemp(asociacion.finAsociacion.first().clase, 'col'),
             columna <- fk_columna_1
         ),
-        fk_2 : ERl!ClaveAjena (
-            Nombre <- 'FK_de_' + relacion.claseasociacion.nombre + 'a' + relacion.finrelacion.last().rol,
-            columnaReferenciada <- thisModule.resolveTemp(relacion.finrelacion.last().clase, 'col'),
+        fk_2 : ER!ClaveAjena (
+            nombre <- 'FK_de_' + asociacion.claseasociacion.nombre + 'a' + asociacion.finAsociacion.last().rol,
+            columnaReferenciada <- thisModule.resolveTemp(asociacion.finAsociacion.last().clase, 'col'),
             columna <- fk_columna_2,
             esquema <- fk_1.esquema
         ),
-        fk_columna_1 : ER!Columna (
-            Nombre <- 'ID_FK_' + relacion.finrelacion.first().rol,
-            tabla <- relacion.claseasociacion
+       fk_columna_1 : ER!Columna (
+			nombre <- 'ID FK :' + asociacion.finAsociacion.first().rol,
+			tabla <- asociacion.claseasociacion
         ),
-        fk_columna_2 : ER!Columna (
-            Nombre <- 'ID_FK_' + relacion.finrelacion.last().rol,
-            tabla <- relacion.claseasociacion
-        )
+    	fk_columna_2 : ER!Columna (
+			nombre <- 'ID FK :' + asociacion.finAsociacion.last().rol,
+			tabla <- asociacion.claseasociacion
+)
 }
 
 
