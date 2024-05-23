@@ -6,8 +6,7 @@
     xmlns:DC_UML="http://DC_UML"
     xsi:schemaLocation="http://DC_UML /entrega2_12/modelos/DC_Uml.ecore"
     nombre="Prueba">
-  <clase nombre="Math"
-      finrelacion="//@relacion.0/@finAsociacion.0">
+  <clase nombre="Math">
     <atributo
         nombre="Numero"
         max="1"/>
@@ -17,20 +16,24 @@
         min="1"
         max="50"/>
   </clase>
-  <clase nombre="Lengua"
-      finrelacion="//@relacion.0/@finAsociacion.1">
+  <clase nombre="Lengua">
     <atributo
         nombre="atr1"
         max="1"/>
   </clase>
+  <clase xsi:type="DC_UML:ClaseAsociacion"
+      nombre=""
+      finrelacion="//@relacion.0/@finAsociacion.0 //@relacion.0/@finAsociacion.1"
+      asociacion="//@relacion.0"/>
   <relacion
-      nombre="Relacion">
+      nombre="Relacion"
+      claseasociacion="//@clase.2">
     <finAsociacion
-        clase="//@clase.0"
+        clase="//@clase.2"
         rol="Math"
         max="1"/>
     <finAsociacion
-        clase="//@clase.1"
+        clase="//@clase.2"
         rol="Lengua"
         max="-1"/>
   </relacion>
